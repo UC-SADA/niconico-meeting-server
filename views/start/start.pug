@@ -1,0 +1,78 @@
+html
+  head
+    meta(charset='UTF-8')
+    title Room
+  body
+    form(name='myroom')
+      p 開くルームを入力してください。
+      input#room(type='text')
+      button#nico-window 送信
+    script.
+      const electron = require('electron')
+      const screen = require('electron').remote.screen
+      const BrowserWindow = require('electron').remote.BrowserWindow
+      const path = require('path')
+      const nicoWindowBtn = document.getElementById('nico-window')
+      let win_nico
+      let win_chart
+      let win_contoller
+      // ボタンクリック時に、レンダラープロセスから別ウィンドウを表示
+      nicoWindowBtn.addEventListener('click', function(event) {
+        var room = document.getElementById('room').value
+        const displayUrl ="#{displayUrl}" + room;
+        const controllerUrl ='#{controllerUrl}' + room;
+        const chartUrl = '#{chartUrl}' + room;
+        //console.log(chartUrl)
+        const { width, height } = screen.getPrimaryDisplay().workAreaSize
+        // ニコニコ用のウィンドウ
+        win_nico = new BrowserWindow({
+          width: width,
+          height: height,
+          frame: false,
+          show: true,
+          transparent: true,
+          resizable: false,
+          webPreferences: {nodeIntegration: false}
+          });
+        win_nico.setIgnoreMouseEvents(true);
+        win_nico.maximize();
+        win_nico.setAlwaysOnTop(true);
+        //win_nico.openDevTools();
+        win_nico.loadURL(displayUrl)  
+        // コントローラ用のウィンドウ
+        win_contoller = new BrowserWindow({
+          x: 100,
+          y: 100,
+          width: 400,
+          height: 850,
+          //frame: false,
+          show: true,
+          //transparent: true,
+          //resizable: false,
+          //webPreferences: {nodeIntegration: false}
+          });
+        //win_contoller.setIgnoreMouseEvents(true);
+        //win_contoller.maximize();
+        //win_contoller.setAlwaysOnTop(true);
+        //win_contoller.openDevTools();
+        win_contoller.loadURL(controllerUrl) 
+        // グラフ描画用のウィンドウ          
+        win_chart = new BrowserWindow({
+          x: 0,
+          y: Math.ceil(height*0.7),
+          width: Math.ceil(width*0.2),
+          height: Math.ceil(height*0.3),
+          frame: false,
+          show: true,
+          transparent: true,
+          resizable: false,
+          webPreferences: {nodeIntegration: false}
+          });
+        win_chart.setIgnoreMouseEvents(true);
+        //win_chart.maximize();
+        win_chart.setAlwaysOnTop(true);
+        //win_chart.openDevTools();
+        win_chart.loadURL(chartUrl) 
+
+        window.close()				
+        })

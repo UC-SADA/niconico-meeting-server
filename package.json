@@ -1,0 +1,63 @@
+{
+  "name": "niconico-meeting-server",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engine": {
+    "node": "12.16.2",
+    "npm": "5.6.0"
+  },
+  "devDependencies": {
+    "electron": "^9.3.2",
+    "electron-builder": "^22.7.0",
+    "electron-packager": "^15.0.0"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
+    "socket.io": "^2.2.0",
+    "config": "^3.3.1",
+    "lodash": "^4.17.19"
+  },
+  "description": "WEB会議をインタラクティブに",
+  "author": "UC-SADA",
+  "license": "MIT",
+  "scripts": {
+    "start": "chcp 65001 && electron .",
+    "build:linux": "electron-builder --linux --dir",
+    "dist:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac --dir",
+    "dist:mac": "electron-builder --mac",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "niconico-meeting-server-app",
+    "publish": {
+      "provider": "github",
+      "owner": "UC-SADA",
+      "repo": "niconico-meeting-server",
+      "releaseType": "release"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "category": "Utility"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    }
+  }
+
+}
+
+

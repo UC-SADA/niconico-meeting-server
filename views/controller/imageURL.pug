@@ -1,0 +1,10 @@
+.form-group
+  label.control-label.col-sm-2 Send Image
+  #url.input-group(style='display: none')
+    input.form-control(type='text', name='url', placeholder='Please input image url')
+    span.input-group-btn
+     button.btn.btn-default(type='submit')
+      i.fa.fa-image
+  button.btn.btn-default.btn-sm(type='button', onclick="$('#url').show(); $(this).hide()")
+    i.fa.fa-bolt
+    |  Show Send Image Textbox

@@ -1,0 +1,44 @@
+html
+	head
+		include head.pug
+	body
+		.container
+			//- ルーム／名前
+			form.form-horizontal(style='margin: 16px')
+				.form-group
+					label.control-label.col-sm-2 ニックネーム
+					| !{name}
+			//- スタンプ
+			form.form-horizontal(style='margin: 16px', role='form', action='/like', method='get', onsubmit='handleSubmit(this); return false;')
+				include commonStamp.pug
+			//- URLイメージ
+				form.form-horizontal(style='margin: 16px', role='form', action='/nico/like', method='get', onsubmit='handleSubmit(this); return false;')
+					include imageURL.pug 
+			//- コメント
+			form.form-horizontal(style='margin: 16px', role='form', action='/nico/comment', method='get', onsubmit="if (this.body.value == '') return false; handleSubmit(this); this.body.value = ''; return false;")
+				include comment.pug
+			//-　QRコード
+			form.form-horizontal(style='margin: 16px')
+				.form-group
+					label.control-label.col-sm-2 QRcode
+					#qrcode
+				script.
+					jQuery('#qrcode').qrcode({
+						width: 128, height: 128,
+						text	: location.href
+					});
+		script.
+			var socket = io.connect();
+			socket.emit("client_to_server_join", "#{room}");
+			socket.on('connect', function(){
+				connect();
+			});
+			socket.on('connectCheck', function(){
+				connect();
+			});
+		.container.text-right
+			p: a(href="/login/name"): span ニックネームを変更する。
+			p: a(href="/login/room"): span ルームを変更する。
+			p: a(href="/"): span TOPページに戻る
+			p: a(href='https://uc-sada.github.io/niconico-Display/',target = "_blank") ニコニコディスプレイのダウンロード
+			NicoNico-Glass © 2017-2019 @Ammonite

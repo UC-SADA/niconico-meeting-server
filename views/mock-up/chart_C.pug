@@ -1,0 +1,43 @@
+extends layout_mock
+
+block content
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      FastClick.attach(document.body);
+      }, false);
+    function handleSubmit (form) {
+      const action = $(form).attr('action')
+      const params = $(form).serialize()
+      const url = `${action}/#{room}/#{name}/?${params}`
+      console.log(url)
+      $.get(url)
+      .fail(function () {
+      alert('failed to send message.')
+      });
+    }
+    function like (type) {
+      const url = `/mock-up/chart/like/#{room}/#{name}/?image=${type}`
+      console.log(url)
+      $.get(url)
+        .fail(function () {
+          alert('failed to like.')
+      })
+    }
+  style.
+    @media (prefers-color-scheme: dark) {
+      body {
+      background-color: #000;
+      color: #fff;
+      }
+    }
+  body
+    .container
+      form.form-horizontal(style='margin: 16px', role='form', action='like', method='get', onsubmit='handleSubmit(this); return false;')
+        .form-group
+          label.control-label.col-sm-2 選択肢
+          .input-group
+            button.btn.btn-default(style='margin-right: 16px',type='button', onclick="like('A')") A
+            button.btn.btn-default(style='margin-right: 16px',type='button', onclick="like('B')") B
+            button.btn.btn-default(style='margin-right: 16px',type='button', onclick="like('C')") C
+            button.btn.btn-default(style='margin-right: 16px',type='button', onclick="like('D')") D
+            button.btn.btn-default(style='margin-right: 16px',type='button', onclick="like('Reset')") Reset

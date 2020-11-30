@@ -1,0 +1,26 @@
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title= title
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js')
+    script(type="text/javascript" src="/public/javascripts/niconico.js")
+    style.
+      @media (prefers-color-scheme: dark) {
+        body {
+        background-color: #000;
+        color: #fff;
+        }
+      }
+  body
+    script(type='text/javascript').
+      var socket = io.connect();
+      socket.emit("client_to_server_join", "#{room}");
+      socket.on('comment', function(msg){
+          handleComment (msg) ;
+        });
+      socket.on('like', function(msg){
+          handleLike (msg) ;
+          handleName (msg) ;
+        });

@@ -1,0 +1,82 @@
+canvas#myChart(style='position: relative')
+script(type='text/javascript').
+  var c=document.getElementById("myChart");
+  //c.width=window.innerWidth*0.1;
+  c.height=window.innerHeight;
+  var socket = io.connect();
+  socket.emit("client_to_server_join", "#{room}");
+  socket.on('chart', function(cnt){
+    if ("#{chart}" == "bar"){
+      chartDraw_Bar("myChart",cnt)
+    }else{
+      chartDraw_Line("myChart",cnt)
+    }
+    
+  });
+  function chartDraw_Line(mychart,data){
+    var myLineChart = new Chart(document.getElementById(mychart), {
+      type: "line",
+      data: {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        datasets: [
+          data["total"],data["00_Good"],data["01_kyoshu"],data["02_maki_1"],data["03_maru"],data["04_batsu"]
+        ]
+      },
+      options: {
+        animation : false,
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMax: Math.max.apply(null, data["total"])*1.2+1,
+              suggestedMin: 0,
+              stepSize: 10,
+              fontSize: 30,
+            }
+          }]
+        },
+        legend: {
+          position: 'bottom'
+        }
+    }})
+  }
+  function chartDraw_Bar(mychart,data){
+    const total = data["total"];
+    const good = data["00_Good"];
+    const kyoshu = data["01_kyoshu"];
+    const maki = data["02_maki_1"];
+    const maru = data["03_maru"];
+    const batsu = data["04_batsu"];
+    var mybarChart = new Chart(document.getElementById(mychart), {
+      type: 'bar',
+      data: {
+        labels: ["スタンプカウント"],
+        datasets: [
+          { label: good.label , data: [good.data[good.data.length-1]] , backgroundColor: good.borderColor},
+          { label: kyoshu.label , data: [kyoshu.data[kyoshu.data.length-1]] , backgroundColor: kyoshu.borderColor},
+          { label: maki.label , data: [maki.data[maki.data.length-1]] , backgroundColor: maki.borderColor},
+          { label: maru.label , data: [maru.data[maru.data.length-1]] , backgroundColor: maru.borderColor},
+          { label: batsu.label , data: [batsu.data[batsu.data.length-1]] , backgroundColor: batsu.borderColor},
+          //{ label: "いいね！", data: [data[0]], backgroundColor: "rgba(244, 143, 177, 0.6)" },
+        ]
+      },
+      options: {
+        animation : false,
+        responsive : true,
+        maintainAspectRatio : false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMax: total.data[total.data.length-1],
+              suggestedMin: 0,
+              stepSize: 1,
+              fontSize: 30,
+            }
+          }]
+        },
+        legend: {
+          position: 'bottom'
+        }
+    }})
+  }

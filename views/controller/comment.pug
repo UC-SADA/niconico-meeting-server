@@ -1,0 +1,34 @@
+.form-group
+  label.control-label.col-sm-2 コメント
+  .input-group
+    input.form-control(type='text', name='body', maxlength='60', placeholder='Please input your comment')
+    span.input-group-btn
+      button.btn.btn-default(type='submit')
+        i.fa.fa-comment
+.form-group
+  label.control-label.col-sm-2 スピード変更
+  .input-group.btn-group(data-toggle='buttons')
+    label.btn.btn-default
+      input.needsclick(type='radio', name='duration', value='4000')
+      | Slow
+    label.btn.btn-default.active
+      input.needsclick(type='radio', name='duration', value='2500', selected='')
+      | Medium
+    label.btn.btn-default
+      input.needsclick(type='radio', name='duration', value='1500')
+      | Fast
+.form-group
+  label.control-label.col-sm-2 色変更
+  .input-group.btn-group(data-toggle='buttons')
+    label.btn.btn-default.active
+      input.needsclick(type='radio', name='color', value='black', selected='')
+      | Black
+    label.btn.btn-default
+      input.needsclick(type='radio', name='color', value='red')
+      | Red
+    label.btn.btn-default
+      input.needsclick(type='radio', name='color', value='blue')
+      | Blue
+    label.btn.btn-default
+      input.needsclick(type='radio', name='color', value='green')
+      | Green
