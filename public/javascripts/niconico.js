@@ -4,17 +4,10 @@ function random (value,rand) {
 }
 
 function handleComment (msg) {
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches){
-    var color = msg.color || '#ffffff'
-    var shadow = msg.shadow || '#ffffff'
-    var rand = 0.4 + msg.rand*0.2 || 0.5
-    var duration = 4000
-  }else{
-    var color = msg.color || '#000000'
-    var shadow = msg.shadow || '#ffffff'
-    var rand = msg.rand || 0.5
-    var duration = 3000
-  }
+  var color = msg.color || '#000000'
+  var shadow = msg.shadow || '#ffffff'
+  var rand = msg.rand || 0.5
+  var duration = msg.duration  || 4000
   const size = msg.size || 56
   const t = document.createElement('div')
 
@@ -39,7 +32,7 @@ function handleComment (msg) {
   }]
 
   const timing = {}
-  timing.duration = (msg.duration || duration) * (window.innerWidth + t.offsetWidth) / window.innerWidth
+  timing.duration = (duration) * (window.innerWidth + t.offsetWidth) / window.innerWidth
   timing.iterations = 1
   timing.easing = msg.easing || 'linear'
 
@@ -51,7 +44,7 @@ function handleComment (msg) {
 
 }
 function handleLike (msg) {
-	msg.duration =2000
+	var duration = msg.duration || 2000
   var rand_h = msg.rand_h * 0.8 || 0.5
   var rand_w = msg.rand_w * 0.8 || 0.5
   const image = msg.image || 'Good'
@@ -85,7 +78,7 @@ function handleLike (msg) {
     }]
 
     const timing = {}
-    timing.duration = msg.duration || 1000
+    timing.duration = duration
     timing.iterations = 1
     timing.easing = msg.easing || 'ease'
 

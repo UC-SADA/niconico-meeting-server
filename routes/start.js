@@ -22,36 +22,25 @@ var getIP = function (req) {
 router.get('/', function(req, res, next) {
   var displayUrl
   var controllerUrl
-  var chartUrl
   req.session.room = req.query.room || req.session.room
   req.session.name = req.query.name || req.session.name
-  req.session.testmode = req.query.testmode || req.session.testmode
-  req.session.chart = req.query.chart || req.session.chart
+  req.session.localmode = req.query.localmode || req.session.localmode
   req.session.login  = true
   req.session.ip = getIP(req) 
   //console.log(req.session)
-	if (req.session.testmode == 1){
-		displayUrl = "http://localhost:2525/display/"
-		controllerUrl = "http://localhost:2525/controller/"
-		chartUrl = "http://localhost:2525/chart/"
-	}else{	
-		displayUrl = "https://niconico-reaction.herokuapp.com/display/"
-		controllerUrl = "https://niconico-reaction.herokuapp.com/controller/"
-		chartUrl = "https://niconico-reaction.herokuapp.com/chart/"
-	}
+	displayUrl = "http://localhost:2525/display/"
+	controllerUrl = "http://localhost:2525/controller/"
   if(req.query.quickstart == 1){
     res.render("start/quickstart",{
       displayUrl:displayUrl,
       controllerUrl:controllerUrl,
-      chartUrl:chartUrl,
       room_id:req.query.room,
       name:req.query.name
     }); 
   }else{
     res.render("start/start",{
       displayUrl:displayUrl,
-      controllerUrl:controllerUrl,
-      chartUrl:chartUrl
+      controllerUrl:controllerUrl
     });
   }
 });

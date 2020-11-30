@@ -30,11 +30,13 @@ script.
       .fail(function () {
         alert('failed to like.')
     })
+    /*
     const url_chart = `/chart/like/#{room}/#{name}/?image=${type}`
     $.get(url_chart)
       .fail(function () {
         alert('failed to chart.')
     })
+    */
   }
   function questionnaire (type) {
     const url = `/nico/like/#{room}/#{name}/?image=${type}`
@@ -55,6 +57,7 @@ script.
         alert('failed to url.')
     })
   }
+  /*
   function connect () {
     const url = `/chart/connect/#{room}`
     $.get(url)
@@ -62,6 +65,7 @@ script.
         alert('failed to url.')
     })
   }
+  */
 style.
   body {
     -webkit-user-select: none;

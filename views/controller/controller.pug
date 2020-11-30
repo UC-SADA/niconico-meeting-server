@@ -30,12 +30,6 @@ html
 		script.
 			var socket = io.connect();
 			socket.emit("client_to_server_join", "#{room}");
-			socket.on('connect', function(){
-				connect();
-			});
-			socket.on('connectCheck', function(){
-				connect();
-			});
 		.container.text-right
 			p: a(href="/login/name"): span ニックネームを変更する。
 			p: a(href="/login/room"): span ルームを変更する。

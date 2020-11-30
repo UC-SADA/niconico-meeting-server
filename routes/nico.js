@@ -11,7 +11,8 @@ app.io.sockets.on('connection', function(socket) {
       var msg = extend({}, req.query);
       msg.rand_h = Math.random().toFixed(3)
       msg.rand_w = Math.random().toFixed(3)
-			msg.name = req.session.name;
+      msg.name = req.session.name;
+      msg.duration = app.localSetting.stampDuration;
       //console.log(req.session)
       app.io.to(req.params.room_id).emit('like', msg);
       res.end();
@@ -20,7 +21,8 @@ app.io.sockets.on('connection', function(socket) {
     router.get('/comment/:room_id/:name', function(req, res, next) {
       var msg = extend({}, req.query);
       msg.rand = Math.random().toFixed(3)
-			msg.name = req.session.name;
+      msg.name = req.session.name;
+      msg.duration = msg.duration * req.session.commentDuration;
       //console.log(msg)
       app.io.to(req.params.room_id).emit('comment', msg);
       res.end()

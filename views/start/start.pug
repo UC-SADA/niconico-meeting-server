@@ -14,15 +14,12 @@ html
       const path = require('path')
       const nicoWindowBtn = document.getElementById('nico-window')
       let win_nico
-      let win_chart
       let win_contoller
       // ボタンクリック時に、レンダラープロセスから別ウィンドウを表示
       nicoWindowBtn.addEventListener('click', function(event) {
         var room = document.getElementById('room').value
         const displayUrl ="#{displayUrl}" + room;
         const controllerUrl ='#{controllerUrl}' + room;
-        const chartUrl = '#{chartUrl}' + room;
-        //console.log(chartUrl)
         const { width, height } = screen.getPrimaryDisplay().workAreaSize
         // ニコニコ用のウィンドウ
         win_nico = new BrowserWindow({
@@ -56,23 +53,6 @@ html
         //win_contoller.setAlwaysOnTop(true);
         //win_contoller.openDevTools();
         win_contoller.loadURL(controllerUrl) 
-        // グラフ描画用のウィンドウ          
-        win_chart = new BrowserWindow({
-          x: 0,
-          y: Math.ceil(height*0.7),
-          width: Math.ceil(width*0.2),
-          height: Math.ceil(height*0.3),
-          frame: false,
-          show: true,
-          transparent: true,
-          resizable: false,
-          webPreferences: {nodeIntegration: false}
-          });
-        win_chart.setIgnoreMouseEvents(true);
-        //win_chart.maximize();
-        win_chart.setAlwaysOnTop(true);
-        //win_chart.openDevTools();
-        win_chart.loadURL(chartUrl) 
 
         window.close()				
         })

@@ -1,32 +1,7 @@
 {
   "name": "niconico-meeting-server",
-  "version": "0.0.2",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "engine": {
-    "node": "12.16.2",
-    "npm": "5.6.0"
-  },
-  "devDependencies": {
-    "electron": "^9.3.2",
-    "electron-builder": "^22.7.0",
-    "electron-packager": "^15.0.0"
-  },
-  "dependencies": {
-    "cookie-parser": "^1.4.4",
-    "express": "^4.17.1",
-    "express-session": "^1.16.2",
-    "morgan": "^1.9.1",
-    "pug": "^2.0.3",
-    "socket.io": "^2.2.0",
-    "config": "^3.3.1",
-    "lodash": "^4.17.19"
-  },
-  "description": "WEB会議をインタラクティブに",
-  "author": "UC-SADA",
-  "license": "MIT",
+  "version": "0.0.3",
+
   "scripts": {
     "start": "chcp 65001 && electron .",
     "build:linux": "electron-builder --linux --dir",
@@ -37,6 +12,28 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
+  "engine": {
+    "node": "12.16.2",
+    "npm": "5.6.0"
+  },
+  "devDependencies": {
+    "electron": "^9.3.5",
+    "electron-builder": "^22.9.1",
+    "electron-packager": "^15.0.0"
+  },
+  "dependencies": {
+    "config": "^3.3.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "lodash": "^4.17.19",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
+    "socket.io": "^2.2.0"
+  },
+  "description": "WEB会議をインタラクティブに",
+  "author": "UC-SADA",
+  "license": "MIT",
   "build": {
     "appId": "niconico-meeting-server-app",
     "publish": {
@@ -57,7 +54,4 @@
       ]
     }
   }
-
 }
-
-
