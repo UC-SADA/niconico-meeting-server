@@ -1,6 +1,6 @@
 {
   "name": "niconico-meeting-server",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "start": "chcp 65001 && electron .",
     "build:linux": "electron-builder --linux --dir",
