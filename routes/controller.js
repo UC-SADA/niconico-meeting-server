@@ -18,6 +18,7 @@ var getIP = function (req) {
 
 function Stamp_DB(req,res,next,view){
   req.session.ip = getIP(req);
+  req.session.localID = req.session.localID || Math.round(Math.random()*100000);
   req.session.login  = true;
 	var msg = "";
 	if (req.session.name == undefined){
@@ -54,7 +55,7 @@ router.get('/nicoTest', function(req, res, next) {
   Stamp_DB(req,res,next,"mock-up/controller")
 });
 router.get('/:room', function(req, res, next) {
-  req.session.name = req.session.name || "Guest";
+  //req.session.name = req.session.name || "Guest";
   req.session.room = req.params.room || "OpenRoom";
   Stamp_DB(req,res,next,"controller/controller")
 });

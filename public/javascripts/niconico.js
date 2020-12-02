@@ -21,7 +21,11 @@ function handleComment (msg) {
   t.style.whiteSpace = 'pre'
   t.style.zIndex = 2147483647
 
-  t.innerText = msg.name +":"+ msg.body
+  if(msg.nickname == "OFF"){
+    t.innerText = msg.body
+  }else{
+    t.innerText = msg.name +":"+ msg.body
+  }
 
   document.body.appendChild(t)
 
@@ -90,41 +94,42 @@ function handleLike (msg) {
 
 }
 function handleName (msg) {
-	const color = msg.color || '#000000'
-	const shadow = msg.shadow || '#ffffff'
-  const rand_h = msg.rand_h * 0.8 || 0.5
-  const rand_w = msg.rand_w * 0.8 || 0.5
-	const duration = 2000
-  const size = msg.size || 56
-  const t = document.createElement('div')
-	msg.duration =2000
+  if(msg.nickname != "OFF"){
+    const color = msg.color || '#000000'
+    const shadow = msg.shadow || '#ffffff'
+    const rand_h = msg.rand_h * 0.8 || 0.5
+    const rand_w = msg.rand_w * 0.8 || 0.5
+    const size = msg.size || 56
+    const t = document.createElement('div')
+    var duration = msg.duration || 2000
 
-  t.style.position = 'fixed'
-	t.style.top = random(window.innerHeight ,rand_h) + 100 + 'px'
-  t.style.left = random(window.innerWidth ,rand_w) - 150 + 'px'
-  t.style.fontSize = size + 'pt'
-  t.style.fontWeight = 'bold'
-  t.style.color = color
-  t.style.textShadow = `-2px -2px 0px ${shadow}, -2px 2px 0px ${shadow}, 2px -2px 0px ${shadow}, 2px 2px 0px ${shadow}`
-  t.style.whiteSpace = 'pre'
-  t.style.zIndex = 2147483647
+    t.style.position = 'fixed'
+    t.style.top = random(window.innerHeight ,rand_h) + 100 + 'px'
+    t.style.left = random(window.innerWidth ,rand_w) - 150 + 'px'
+    t.style.fontSize = size + 'pt'
+    t.style.fontWeight = 'bold'
+    t.style.color = color
+    t.style.textShadow = `-2px -2px 0px ${shadow}, -2px 2px 0px ${shadow}, 2px -2px 0px ${shadow}, 2px 2px 0px ${shadow}`
+    t.style.whiteSpace = 'pre'
+    t.style.zIndex = 2147483647
 
-  t.innerText = msg.name
+    t.innerText = msg.name
 
-  document.body.appendChild(t)
-  const effect = [{
-		opacity: 0.0,
-	}, {
-		opacity: 1.0,
-	}, {
-		opacity: 0.0,
-	}]
-		
-  const timing = {}
-  timing.duration = msg.duration
-  timing.iterations = 1
-  timing.easing = msg.easing || 'linear'
-  t.animate(effect, timing).onfinish = function () {
-    document.body.removeChild(t)
+    document.body.appendChild(t)
+    const effect = [{
+      opacity: 0.0,
+    }, {
+      opacity: 1.0,
+    }, {
+      opacity: 0.0,
+    }]
+      
+    const timing = {}
+    timing.duration = duration
+    timing.iterations = 1
+    timing.easing = msg.easing || 'linear'
+    t.animate(effect, timing).onfinish = function () {
+      document.body.removeChild(t)
+    }
   }
 }

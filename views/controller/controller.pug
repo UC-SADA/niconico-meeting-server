@@ -3,20 +3,21 @@ html
 		include head.pug
 	body
 		.container
-			//- ルーム／名前
-			form.form-horizontal(style='margin: 16px')
+			//- 名前
+			form
+				//- ニックネーム
 				.form-group
-					label.control-label.col-sm-2 ニックネーム
-					| !{name}
-			//- スタンプ
-			form.form-horizontal(style='margin: 16px', role='form', action='/like', method='get', onsubmit='handleSubmit(this); return false;')
-				include commonStamp.pug
-			//- URLイメージ
-				form.form-horizontal(style='margin: 16px', role='form', action='/nico/like', method='get', onsubmit='handleSubmit(this); return false;')
-					include imageURL.pug 
-			//- コメント
-			form.form-horizontal(style='margin: 16px', role='form', action='/nico/comment', method='get', onsubmit="if (this.body.value == '') return false; handleSubmit(this); this.body.value = ''; return false;")
-				include comment.pug
+					form.form-horizontal(style='margin: 16px', role='form', action='/nico/nickname', method='get', onsubmit='handleSubmit(this); return false;')
+						include nickname.pug 
+				//- スタンプ
+				form.form-horizontal(style='margin: 16px', role='form', action='/like', method='get', onsubmit='handleSubmit(this); return false;')
+					include commonStamp.pug
+				//- URLイメージ
+					form.form-horizontal(style='margin: 16px', role='form', action='/nico/like', method='get', onsubmit='handleSubmit(this); return false;')
+						include imageURL.pug 
+				//- コメント
+				form.form-horizontal(style='margin: 16px', role='form', action='/nico/comment', method='get', onsubmit="if (this.body.value == '') return false; handleSubmit(this); this.body.value = ''; return false;")
+					include comment.pug
 			//-　QRコード
 			form.form-horizontal(style='margin: 16px')
 				.form-group
@@ -34,5 +35,5 @@ html
 			p: a(href="/login/name"): span ニックネームを変更する。
 			p: a(href="/login/room"): span ルームを変更する。
 			p: a(href="/"): span TOPページに戻る
-			p: a(href='https://uc-sada.github.io/niconico-Display/',target = "_blank") ニコニコディスプレイのダウンロード
-			NicoNico-Glass © 2017-2019 @Ammonite
+			p: a(href='https://uc-sada.github.io/niconico-Display/',target = "_blank") ニコニコミーティングのダウンロード
+			NicoNico-Meeting © 2017-20 @Ammonite
