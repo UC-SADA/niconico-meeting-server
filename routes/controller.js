@@ -38,7 +38,8 @@ function Stamp_DB(req,res,next,view){
 	else{	
 		res.render(view,{
 			room:req.session.room,
-			name:req.session.name,
+      name:req.session.name,
+      LocalIP:req.session.LocalAddress
 		});
 	}
 }

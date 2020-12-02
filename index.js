@@ -14,9 +14,40 @@ const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const logger = require('morgan');
 
+const os = require('os');
+const interfaces = os.networkInterfaces();
+const addresses = Object.keys(interfaces)
+  .reduce((results, name) => results.concat(interfaces[name]), [])
+  .filter((iface) => iface.family === 'IPv4' && !iface.internal)
+  .map((iface) => iface.address);
+const mkdirp = require("mkdirp")
+require('date-utils') //現在時刻の取得に必要
+function getLocalAddress() {
+    var ifacesObj = {}
+    ifacesObj.ipv4 = [];
+    ifacesObj.ipv6 = [];
+    var interfaces = os.networkInterfaces();
+    for (var dev in interfaces) {
+        interfaces[dev].forEach(function(details){
+            if (!details.internal){
+                switch(details.family){
+                    case "IPv4":
+                        ifacesObj.ipv4.push({name:dev, address:details.address})
+                    break;
+                    case "IPv6":
+                        ifacesObj.ipv6.push({name:dev, address:details.address})
+                    break;
+                }
+            }
+        });
+    }
+    return ifacesObj;
+};
+
 let inputWindow;
 let isLoginWindow = false;
 
+//　設定データの読み込み
 const defaultConfig = {
     "name": "GUEST",
     "room": "TEST_ROOM",
@@ -65,6 +96,7 @@ app.use('/login', require('./routes/login'));
 
 elc_app.on('ready', function (event) {
 console.log(config);
+console.log(getLocalAddress().ipv4[0].address);
 var conf = "?";
 for (var i = 0;i<Object.keys(config).length;i++){
   conf += Object.keys(config)[i] + "=" + Object.values(config)[i] + "&"
@@ -79,5 +111,6 @@ inputWindow = new electron.BrowserWindow({
 inputWindow.setAlwaysOnTop(true);
 //  inputWindow.setMenu(null);
 //  inputWindow.openDevTools();
-inputWindow.loadURL('http://localhost:2525/start'+conf); 
+//inputWindow.loadURL('http://localhost:2525/start'+conf); 
+inputWindow.loadURL("http://" + getLocalAddress().ipv4[0].address + ':2525/start'+conf); 
 });

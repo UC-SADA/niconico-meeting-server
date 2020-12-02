@@ -1,5 +1,5 @@
 var express = require('express');
-const app = require('express')();
+var app = require('express')();
 var router = express.Router();
 /* GET users listing. */
 var getIP = function (req) {
@@ -18,6 +18,35 @@ var getIP = function (req) {
   return '0.0.0.0';
 };
 
+const os = require('os');
+const interfaces = os.networkInterfaces();
+const addresses = Object.keys(interfaces)
+  .reduce((results, name) => results.concat(interfaces[name]), [])
+  .filter((iface) => iface.family === 'IPv4' && !iface.internal)
+  .map((iface) => iface.address);
+var mkdirp = require("mkdirp")
+require('date-utils') //現在時刻の取得に必要
+function getLocalAddress() {
+    var ifacesObj = {}
+    ifacesObj.ipv4 = [];
+    ifacesObj.ipv6 = [];
+    var interfaces = os.networkInterfaces();
+    for (var dev in interfaces) {
+        interfaces[dev].forEach(function(details){
+            if (!details.internal){
+                switch(details.family){
+                    case "IPv4":
+                        ifacesObj.ipv4.push({name:dev, address:details.address})
+                    break;
+                    case "IPv6":
+                        ifacesObj.ipv6.push({name:dev, address:details.address})
+                    break;
+                }
+            }
+        });
+    }
+    return ifacesObj;
+};
 
 router.get('/', function(req, res, next) {
   var displayUrl
@@ -25,11 +54,13 @@ router.get('/', function(req, res, next) {
   req.session.room = req.query.room || req.session.room
   req.session.name = req.query.name || req.session.name
   req.session.localmode = req.query.localmode || req.session.localmode
+  req.session.commentDuration = req.query.commentDuration || req.session.commentDuration
+  req.session.stampDuration = req.query.stampDuration || req.session.stampDuration
   req.session.login  = true
   req.session.ip = getIP(req) 
-  //console.log(req.session)
+  console.log(req.session)
 	displayUrl = "http://localhost:2525/display/"
-	controllerUrl = "http://localhost:2525/controller/"
+  controllerUrl = "http://" + getLocalAddress().ipv4[0].address + ':2525/controller/'
   if(req.query.quickstart == 1){
     res.render("start/quickstart",{
       displayUrl:displayUrl,
