@@ -1,0 +1,10 @@
+.form-group
+  label.control-label.col-sm-2 ニックネーム
+  | !{name}
+  .input-group.btn-group(data-toggle='buttons')
+    label.btn.btn-default.active(onclick="nickname('ON')")
+      input.needsclick(type='radio')
+      | ON
+    label.btn.btn-default(onclick="nickname('OFF')")
+      input.needsclick(type='radio')
+      | OFF

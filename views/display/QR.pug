@@ -1,0 +1,24 @@
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    script(type='text/javascript', src='/public/javascripts/jquery.js')
+    script(type='text/javascript', src='/public/javascripts/jquery.qrcode.js')
+    script(type='text/javascript', src='/public/javascripts/qrcode.js')
+    style.
+      @media (prefers-color-scheme: dark) {
+        body {
+        background-color: #000;
+        color: #fff;
+        }
+      }
+  body
+    form.form-horizontal(style='margin: 16px')
+      .form-group
+        label.control-label.col-sm-2 HMD Link
+        #qrcode
+      script.
+        jQuery('#qrcode').qrcode({
+          width: 128, height: 128,
+          text	: location.href.slice(0,-1) + 1
+        });

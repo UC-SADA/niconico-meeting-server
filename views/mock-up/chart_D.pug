@@ -1,0 +1,18 @@
+extends layout_mock
+
+block content
+  body
+    canvas#myChart_1
+    script(type='text/javascript').
+      var bar_list = [[0],[0],[0],[0]];
+      var socket = io.connect();
+      socket.emit("client_to_server_join", "#{room}");
+      socket.on('chart', function(cnt){
+      bar_List = cnt;
+      chartDraw("myChart_1") ;
+      console.log("chartDraw");
+      });
+      socket.on('like', function(msg){
+        handleLike (msg) ;
+        console.log("like in");
+      });

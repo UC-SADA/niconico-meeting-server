@@ -1,0 +1,59 @@
+html
+  head
+    meta(charset='UTF-8')
+    title Room
+  body
+    form(name='myroom')
+      p #{room_id} ルームを開きます。
+      button#nico-window YES
+    p: a(href="/start"): span ルームを指定し直す。
+    script.
+      const electron = require('electron')
+      const screen = require('electron').remote.screen
+      const BrowserWindow = require('electron').remote.BrowserWindow
+      const path = require('path')
+      const nicoWindowBtn = document.getElementById('nico-window')
+      let win_nico
+      let win_contoller
+      // ボタンクリック時に、レンダラープロセスから別ウィンドウを表示
+      nicoWindowBtn.addEventListener('click', function(event) {
+        const room_id = "#{room_id}"
+        const name = "#{name}"
+        const displayUrl ="#{displayUrl}" + room_id;
+        const controllerUrl ='#{controllerUrl}'  + room_id + "/" + name;
+        const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+        // ニコニコ用のウィンドウ
+        win_nico = new BrowserWindow({
+          width: width,
+          height: height,
+          frame: false,
+          show: true,
+          transparent: true,
+          resizable: false,
+          webPreferences: {nodeIntegration: false}
+          });
+        win_nico.setIgnoreMouseEvents(true);
+        win_nico.maximize();
+        win_nico.setAlwaysOnTop(true);
+        //win_nico.openDevTools();
+        win_nico.loadURL(displayUrl)  
+        // コントローラ用のウィンドウ
+        win_contoller = new BrowserWindow({
+          x: 100,
+          y: 100,
+          width: 400,
+          height: 850,
+          //frame: false,
+          show: true,
+          //transparent: true,
+          //resizable: false,
+          //webPreferences: {nodeIntegration: false}
+          });
+        //win_contoller.setIgnoreMouseEvents(true);
+        //win_contoller.maximize();
+        //win_contoller.setAlwaysOnTop(true);
+        //win_contoller.openDevTools();
+        win_contoller.loadURL(controllerUrl) 
+
+        window.close()
+        })
