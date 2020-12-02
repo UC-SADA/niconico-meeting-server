@@ -14,45 +14,15 @@ const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const logger = require('morgan');
 
-const os = require('os');
-const interfaces = os.networkInterfaces();
-const addresses = Object.keys(interfaces)
-  .reduce((results, name) => results.concat(interfaces[name]), [])
-  .filter((iface) => iface.family === 'IPv4' && !iface.internal)
-  .map((iface) => iface.address);
-const mkdirp = require("mkdirp")
-require('date-utils') //現在時刻の取得に必要
-function getLocalAddress() {
-    var ifacesObj = {}
-    ifacesObj.ipv4 = [];
-    ifacesObj.ipv6 = [];
-    var interfaces = os.networkInterfaces();
-    for (var dev in interfaces) {
-        interfaces[dev].forEach(function(details){
-            if (!details.internal){
-                switch(details.family){
-                    case "IPv4":
-                        ifacesObj.ipv4.push({name:dev, address:details.address})
-                    break;
-                    case "IPv6":
-                        ifacesObj.ipv6.push({name:dev, address:details.address})
-                    break;
-                }
-            }
-        });
-    }
-    return ifacesObj;
-};
-
 let inputWindow;
 let isLoginWindow = false;
 
 //　設定データの読み込み
 const defaultConfig = {
-    "name": "GUEST",
+    "name": "",
     "room": "TEST_ROOM",
-    "stampDuration": 2000,
-    "commentDuration": 2000,
+    "stampDuration": 4000,
+    "commentDuration": 4000,
     "quickstart": 0,
     "localmode": 1
 }
