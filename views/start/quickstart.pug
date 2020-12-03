@@ -21,28 +21,31 @@ html
         const name = "#{name}"
         const displayUrl ="#{displayUrl}" + room_id;
         const controllerUrl ='#{controllerUrl}'  + room_id + "/" + name;
-        const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-        // ニコニコ用のウィンドウ
-        win_nico = new BrowserWindow({
-          width: width,
-          height: height,
-          frame: false,
-          show: true,
-          transparent: true,
-          resizable: false,
-          webPreferences: {nodeIntegration: false}
-          });
-        win_nico.setIgnoreMouseEvents(true);
-        win_nico.maximize();
-        win_nico.setAlwaysOnTop(true);
-        //win_nico.openDevTools();
-        win_nico.loadURL(displayUrl)  
+        for( var i = 0 ; i < screen.getAllDisplays().length ;i++ ){
+          //var { width, height } = screen.getPrimaryDisplay().workAreaSize
+          var { width, height } = screen.getAllDisplays()[i].workAreaSize
+          win_nico = new BrowserWindow({
+            width: width,
+            height: height,
+            frame: false,
+            show: true,
+            transparent: true,
+            resizable: false,
+            webPreferences: {nodeIntegration: false}
+            });
+          win_nico.setIgnoreMouseEvents(true);
+          win_nico.maximize();
+          win_nico.setAlwaysOnTop(true);
+          //win_nico.openDevTools();
+          win_nico.loadURL(displayUrl)  
+       }
+        
         // コントローラ用のウィンドウ
         win_contoller = new BrowserWindow({
           x: 100,
           y: 100,
           width: 400,
-          height: 850,
+          height: 900,
           //frame: false,
           show: true,
           //transparent: true,
@@ -54,6 +57,7 @@ html
         //win_contoller.setAlwaysOnTop(true);
         //win_contoller.openDevTools();
         win_contoller.loadURL(controllerUrl) 
+        console.log(win_nico)
 
-        window.close()
+        window.close()				
         })

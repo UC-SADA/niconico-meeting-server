@@ -53,7 +53,10 @@ app.io.sockets.on('connection', function(socket) {
       msg.rand = Math.random().toFixed(3)
       msg.name = req.session.name;
       msg.nickname = req.session.nickname;
-      msg.duration = msg.duration * req.session.commentDuration || req.session.commentDuration;
+      console.log(msg)
+      console.log(req.session)
+      msg.duration = msg.duration * app.localSetting.commentDuration || app.localSetting.commentDuration;
+      console.log(msg.duration)
       var dt = new Date()
       appendFile("./Log/"+dt.toFormat("YYYYMMDD")+"comment.csv",dt.toFormat("YYYY年MM月DD日HH24時MI分SS秒") +"," + req.params.room_id +"," + msg.name + "," + JSON.stringify(req.session.localID)+ "," + JSON.stringify(msg.body)+"\n");
       app.io.to(req.params.room_id).emit('comment', msg);

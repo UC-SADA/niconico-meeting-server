@@ -48,7 +48,7 @@ function handleComment (msg) {
 
 }
 function handleLike (msg) {
-	var duration = msg.duration || 2000
+	var duration = msg.duration || 4000
   var rand_h = msg.rand_h * 0.8 || 0.5
   var rand_w = msg.rand_w * 0.8 || 0.5
   const image = msg.image || 'Good'
@@ -101,7 +101,7 @@ function handleName (msg) {
     const rand_w = msg.rand_w * 0.8 || 0.5
     const size = msg.size || 56
     const t = document.createElement('div')
-    var duration = msg.duration || 2000
+    var duration = msg.duration || 4000
 
     t.style.position = 'fixed'
     t.style.top = random(window.innerHeight ,rand_h) + 100 + 'px'
