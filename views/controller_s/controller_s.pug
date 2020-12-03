@@ -1,0 +1,53 @@
+html
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title simple-controller
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+    script.
+      const room_id = "#{room}"
+      const name = "#{name}"
+      const duration = "#{duration}"
+      const name_on = "#{name_on}"
+      function like (type) {
+        const url = "https://nico-chat.herokuapp.com/nico/like/"+room_id+"/"+name+"?image=" + type
+        //\const url = "http://localhost:2525/nico/like/"+room_id+"/"+name+"?image=" + type;
+        document.getElementById('nico').contentWindow.location.replace(url);
+      }
+      function handleSubmit (form) {
+        if (name_on == "true"){
+          form.body.value = name + ":" +form.body.value
+        }
+        const action = $(form).attr('action');
+        const params = $(form).serialize();
+        const url = "https://nico-chat.herokuapp.com" + action + "/"+room_id+"/"+name+"/?" +params+ "&duration=" + duration;
+        //-const url = "http://localhost:2525" + action + "/"+room_id+"/"+name+"/?" +params+ "&duration=" + duration;
+        document.getElementById('nico').contentWindow.location.replace(url);
+      }
+    style.
+      @media (prefers-color-scheme: dark) {
+        body {
+        background-color: #000;
+        color: #fff;
+        }
+      }
+  body
+    .form-group
+      .input-group
+        button.btn.btn-default(style='margin-right: 16px;', type='button', onclick="like('Good')")
+          i.fa.fa-thumbs-o-up
+        button.btn.btn-default(style='margin-right: 16px;', type='button', onclick="like('Bad')")
+          i.fa.fa-thumbs-o-down
+        iframe#nico(src='', width='0', height='0', frameborder='0', scrolling='no')
+    form.form-horizontal(style='margin: 5px;', role='form', action='/nico/comment', method='get', onsubmit="if (this.body.value == '') return false; handleSubmit(this); this.body.value = ''; return false;")
+      .form-group
+        .input-group
+          input.form-control(type='text', name='body', maxlength='60', placeholder='Please input your comment')
+          span.input-group-btn
+            button.btn.btn-default(type='submit')
+              i.fa.fa-comment

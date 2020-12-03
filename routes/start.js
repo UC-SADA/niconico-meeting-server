@@ -60,7 +60,7 @@ router.get('/', function(req, res, next) {
   req.session.ip = getIP(req) 
   console.log(req.session)
 	displayUrl = "http://localhost:2525/display/"
-  controllerUrl = "http://" + getLocalAddress().ipv4[0].address + ':2525/controller/'
+  controllerUrl = "http://" + getLocalAddress().ipv4[0].address + ':2525/controller/'|| "http://localhost:2525/controller/"
   if(req.query.quickstart == 1){
     res.render("start/quickstart",{
       displayUrl:displayUrl,

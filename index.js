@@ -16,7 +16,7 @@ const logger = require('morgan');
 
 let inputWindow;
 let isLoginWindow = false;
-
+require('date-utils') //現在時刻の取得に必要
 //　設定データの読み込み
 const defaultConfig = {
     "name": "",
@@ -59,6 +59,7 @@ app.use('/',require('./routes/top'));
 app.use('/nico', require('./routes/nico'));
 app.use('/display', require('./routes/display'));
 app.use('/controller', require('./routes/controller'));
+app.use('/controller_s', require('./routes/controller_s'));
 app.use('/start', require('./routes/start'));
 app.use('/login', require('./routes/login'));
 
@@ -66,7 +67,6 @@ app.use('/login', require('./routes/login'));
 
 elc_app.on('ready', function (event) {
 console.log(config);
-console.log(getLocalAddress().ipv4[0].address);
 var conf = "?";
 for (var i = 0;i<Object.keys(config).length;i++){
   conf += Object.keys(config)[i] + "=" + Object.values(config)[i] + "&"
@@ -81,6 +81,6 @@ inputWindow = new electron.BrowserWindow({
 inputWindow.setAlwaysOnTop(true);
 //  inputWindow.setMenu(null);
 //  inputWindow.openDevTools();
-//inputWindow.loadURL('http://localhost:2525/start'+conf); 
-inputWindow.loadURL("http://" + getLocalAddress().ipv4[0].address + ':2525/start'+conf); 
+inputWindow.loadURL('http://localhost:2525/start'+conf); 
+//inputWindow.loadURL("http://" + getLocalAddress().ipv4[0].address + ':2525/start'+conf); 
 });
