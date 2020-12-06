@@ -1,0 +1,37 @@
+meta(charset='UTF-8')
+meta(http-equiv='X-UA-Compatible', content='IE=edge')
+title niconico-Controller
+meta(name='viewport', content='width=device-width, initial-scale=1')
+link(rel='stylesheet', href='/public/CSS/bootstrap.min.css')
+link(rel='stylesheet', href='/public/CSS/bootstrap-theme.min.css')
+script(type='text/javascript', src='/public/javascripts/jquery.js')
+script(type='text/javascript', src='/public/javascripts/bootstrap.min.js')
+script(type='text/javascript', src='/public/javascripts/socketio_2_2_0.js')
+script.
+	function like (type) {
+		const url = "/nico/like/#{room}/#{name}/?image=" + type;
+		document.getElementById('nico').contentWindow.location.replace(url);
+	}
+	function nickname (type) {
+		const url = "/nico/nickname/?nickname=" + type
+		document.getElementById('nico').contentWindow.location.replace(url);
+	}  
+	function handleSubmit (form) {
+		const action = $(form).attr('action')
+		const params = $(form).serialize()
+		const url = action + "/#{room}/#{name}/?" +params;
+		document.getElementById('nico').contentWindow.location.replace(url);
+	}
+style.
+	body {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	.footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		background-color: rgba(0,0,0,0.05);
+	}

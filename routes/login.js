@@ -42,7 +42,7 @@ router.post('/', function(req, res, next) {
 		res.redirect("/login/room")
 	}else{
 		req.session.login = true;
-		res.redirect("/controller/" + req.session.room)
+		res.redirect("/controller/" + req.session.room + "/?ie=" + req.session.ie)
 	}
 });
 

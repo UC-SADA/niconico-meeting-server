@@ -13,7 +13,7 @@ html
       const BrowserWindow = require('electron').remote.BrowserWindow
       const path = require('path')
       const nicoWindowBtn = document.getElementById('nico-window')
-      let win_nico ;
+      let win_nico = [] ;
       let win_contoller
       // ボタンクリック時に、レンダラープロセスから別ウィンドウを表示
       nicoWindowBtn.addEventListener('click', function(event) {
@@ -24,7 +24,7 @@ html
         for( var i = 0 ; i < screen.getAllDisplays().length ;i++ ){
           //var { width, height } = screen.getPrimaryDisplay().workAreaSize
           var { width, height } = screen.getAllDisplays()[i].workAreaSize
-          win_nico = new BrowserWindow({
+          win_nico[i] = new BrowserWindow({
             width: width,
             height: height,
             frame: false,
@@ -33,11 +33,11 @@ html
             resizable: false,
             webPreferences: {nodeIntegration: false}
             });
-          win_nico.setIgnoreMouseEvents(true);
-          win_nico.maximize();
-          win_nico.setAlwaysOnTop(true);
-          //win_nico.openDevTools();
-          win_nico.loadURL(displayUrl)  
+          win_nico[i].setIgnoreMouseEvents(true);
+          win_nico[i].maximize();
+          win_nico[i].setAlwaysOnTop(true);
+          //win_nico[i].openDevTools();
+          win_nico[i].loadURL(displayUrl)  
        }
         
         // コントローラ用のウィンドウ

@@ -31,13 +31,20 @@ html
 			//-　URLをコピー
 			form.form-horizontal(style='margin: 16px')
 				.form-group
-					label.control-label.col-sm-2 URLコピー<
-					<a onclick="clipURL()">URLをコピー</a>
+					label.control-label.col-sm-2
+						a( onclick='clipURL("")') URLコピー <br>
+						a( onclick='clipURL("ie")') URLコピー(IE用)
 		script.
 			var socket = io.connect();
 			socket.emit("client_to_server_join", "#{room}");
-			function clipURL() {
-				$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">'+location.href+'</textarea>');
+			function clipURL(ie) {
+				console.log(ie)
+				if (ie == "ie"){
+					var url = location.href.replace("ie=0","ie=1");
+				}else{
+					var url = location.href;
+				}
+				$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">'+url+'</textarea>');
 				$('#currentURL').select();
 				document.execCommand('copy');
 				$('#currentURL').remove();

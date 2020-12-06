@@ -26,6 +26,7 @@ function Stamp_DB(req,res,next,view){
 			title : "niconico-Reaction",
 			sub_title : "ニックネームの設定:",
 			input_name : "name",
+			ie :req.query.ie
 		})
 	}	else if (req.session.room == undefined)
 	{
@@ -33,6 +34,7 @@ function Stamp_DB(req,res,next,view){
 			title : "niconico-Reaction",
 			sub_title : "ルームの設定:",
 			input_name : "room",
+			ie :req.query.ie
 		});
 	}
 	else{	
@@ -46,9 +48,16 @@ function Stamp_DB(req,res,next,view){
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+	var view = "controller/controller"
+	if (req.query.ie == 1){
+		req.session.ie = 1;
+		view = "controller/controller_ie"
+	}else{
+		req.session.ie = 0;
+	}
   req.session.name = req.session.name || "Guest";
   req.session.room = req.session.room || "OpenRoom";
-  Stamp_DB(req,res,next,"controller/controller")
+  Stamp_DB(req,res,next,view)
 });
 router.get('/nicoTest', function(req, res, next) {
   req.session.name = req.session.name || "Guest";
@@ -56,9 +65,17 @@ router.get('/nicoTest', function(req, res, next) {
   Stamp_DB(req,res,next,"mock-up/controller")
 });
 router.get('/:room', function(req, res, next) {
+	console.log(req.query)
+	var view = "controller/controller"
+	if (req.query.ie == 1){
+		req.session.ie = 1;
+		view = "controller/controller_ie"
+	}else{
+		req.session.ie = 0;
+	}
   //req.session.name = req.session.name || "Guest";
-  req.session.room = req.params.room || "OpenRoom";
-  Stamp_DB(req,res,next,"controller/controller")
+	req.session.room = req.params.room || "OpenRoom";
+  Stamp_DB(req,res,next,view)
 });
 router.get('/nicoTest/:room', function(req, res, next) {
   req.session.name = req.session.name || "Guest";
@@ -67,9 +84,16 @@ router.get('/nicoTest/:room', function(req, res, next) {
 });
 
 router.get('/:room/:name', function(req, res, next) {
+	var view = "controller/controller"
+	if (req.query.ie == 1){
+		req.session.ie = 1;
+		view = "controller/controller_ie"
+	}else{
+		req.session.ie = 0;
+	}
   req.session.name = req.params.name || "Guest";
   req.session.room = req.params.room || "OpenRoom";
-  Stamp_DB(req,res,next,"controller/controller")
+  Stamp_DB(req,res,next,view)
 });
 router.get('/nicoTest/:room/:name', function(req, res, next) {
   req.session.name = req.params.name || "Guest";

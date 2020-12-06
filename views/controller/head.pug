@@ -1,4 +1,5 @@
 meta(charset='UTF-8')
+meta(http-equiv='X-UA-Compatible', content='IE=edge')
 title niconico-Controller
 meta(name='viewport', content='width=device-width, initial-scale=1')
 //-
@@ -7,7 +8,7 @@ meta(name='viewport', content='width=device-width, initial-scale=1')
   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 link(rel='stylesheet', href='/public/CSS/bootstrap.min.css')
 link(rel='stylesheet', href='/public/CSS/bootstrap-theme.min.css')
-link(rel='stylesheet', href='/public/CSS/all.min.css')
+//-link(rel='stylesheet', href='/public/CSS/all.min.css')
 //-script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js')
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
@@ -20,9 +21,6 @@ script(type='text/javascript', src='/public/javascripts/niconico.js')
 script(type='text/javascript', src='/public/javascripts/jquery.qrcode.js')
 script(type='text/javascript', src='/public/javascripts/qrcode.js')
 script.
-  document.addEventListener('DOMContentLoaded', function() {
-    FastClick.attach(document.body);
-    }, false);
   function handleSubmit (form) {
     const action = $(form).attr('action')
     const params = $(form).serialize()
@@ -38,25 +36,6 @@ script.
       .fail(function () {
         alert('failed to like.')
     })
-    /*
-    const url_chart = `/chart/like/#{room}/#{name}/?image=${type}`
-    $.get(url_chart)
-      .fail(function () {
-        alert('failed to chart.')
-    })
-    */
-  }
-  function questionnaire (type) {
-    const url = `/nico/like/#{room}/#{name}/?image=${type}`
-    $.get(url)
-      .fail(function () {
-        alert('failed to like.')
-    })
-    const url_questionnaire = `/chart/questionnaire/#{room}/#{name}/?image=${type}`
-    $.get(url_questionnaire)
-      .fail(function () {
-        alert('failed to questionnaire.')
-    })
   }
   function imageUrl (type) {
     const url = `/nico/like/#{room}/#{name}/?url=${type}`
@@ -65,15 +44,6 @@ script.
         alert('failed to url.')
     })
   }
-  /*
-  function connect () {
-    const url = `/chart/connect/#{room}`
-    $.get(url)
-      .fail(function () {
-        alert('failed to url.')
-    })
-  }
-  */
   function nickname (type) {
     const url = `/nico/nickname/?nickname=${type}`
     $.get(url)
