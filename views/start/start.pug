@@ -13,39 +13,57 @@ html
       const BrowserWindow = require('electron').remote.BrowserWindow
       const path = require('path')
       const nicoWindowBtn = document.getElementById('nico-window')
-      let win_nico = [] ;
-      let win_contoller
+      let win_nico ;
+			let win_sub ;
+			let win_contoller ;
       // ボタンクリック時に、レンダラープロセスから別ウィンドウを表示
       nicoWindowBtn.addEventListener('click', function(event) {
         var room = document.getElementById('room').value
         const displayUrl ="#{displayUrl}" + room;
         const controllerUrl ='#{controllerUrl}' + room;
-        // ニコニコ用のウィンドウ
-        for( var i = 0 ; i < screen.getAllDisplays().length ;i++ ){
-          //var { width, height } = screen.getPrimaryDisplay().workAreaSize
-          var { width, height } = screen.getAllDisplays()[i].workAreaSize
-          win_nico[i] = new BrowserWindow({
-            width: width,
-            height: height,
-            frame: false,
-            show: true,
-            transparent: true,
-            resizable: false,
-            webPreferences: {nodeIntegration: false}
-            });
-          win_nico[i].setIgnoreMouseEvents(true);
-          win_nico[i].maximize();
-          win_nico[i].setAlwaysOnTop(true);
-          //win_nico[i].openDevTools();
-          win_nico[i].loadURL(displayUrl)  
-       }
-        
+				const displays = screen.getAllDisplays()
+  			const externalDisplay = displays.find((display) => {
+    			return display.bounds.x !== 0 || display.bounds.y !== 0
+  			})
+				// ニコニコ用のウィンドウ
+				var { width, height } = screen.getPrimaryDisplay().workAreaSize
+				win_nico= new BrowserWindow({
+					width: width,
+					height: height,
+					frame: false,
+					show: true,
+					transparent: true,
+					resizable: false,
+					webPreferences: {nodeIntegration: false}
+					});
+				win_nico.setIgnoreMouseEvents(true);
+				win_nico.maximize();
+				win_nico.setAlwaysOnTop(true);
+				//win_nico.openDevTools();
+				win_nico.loadURL(displayUrl)  
+				// ニコニコ用のウィンドウ 2
+				if (externalDisplay) {
+					win_sub = new BrowserWindow({
+						x: externalDisplay.bounds.x + 50,
+						y: externalDisplay.bounds.y + 50,
+						frame: false,
+						show: true,
+						transparent: true,
+						resizable: false,
+						webPreferences: {nodeIntegration: false}
+					})
+					win_sub.setIgnoreMouseEvents(true);
+					win_sub.maximize();
+					win_sub.setAlwaysOnTop(true);
+					//win_sub.openDevTools();
+					win_sub.loadURL(displayUrl)  
+				}
         // コントローラ用のウィンドウ
         win_contoller = new BrowserWindow({
           x: 100,
           y: 100,
-          width: 400,
-          height: 900,
+          width: 420,
+          height: 1000,
           //frame: false,
           show: true,
           //transparent: true,
@@ -57,7 +75,5 @@ html
         //win_contoller.setAlwaysOnTop(true);
         //win_contoller.openDevTools();
         win_contoller.loadURL(controllerUrl) 
-        console.log(win_nico)
-
         window.close()				
         })
